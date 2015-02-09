@@ -1,26 +1,34 @@
 name:                bindings-termbox
-version:             0.1.0.0
+
+synopsis:
+  Low level bindings to the termbox library
+description:
+            Low level bindings to the termbox library.
+            .
+            The version of this library is tied to the version of termbox it is built for.
+            .
+            Version 1.1.0 of termbox is supported by 1.1.0.x of bindings-termbox.
+version:             1.1.0.0
 author:              Nick Partridge
 maintainer:          Nick Partridge <nkpart@gmail.com>
--- copyright:
 license: Apache-2.0
-license-file: LICENSE
+license-file: LICENCE
 category: FFI
 build-type:          Simple
 cabal-version:       >=1.10
+source-repository head
+  type: git
+  location: https://github.com/nkpart/bindings-termbox
 
 library
   hs-source-dirs:
     src
-  extensions:
+  default-extensions:
     ForeignFunctionInterface
-  -- includes:
-  --   termbox.h
   extra-libraries:
     termbox
   exposed-modules:
     Bindings.Termbox
-  -- other-modules:
   build-depends:
                 base >=4.7 && <4.8
               , bindings-DSL >= 1.0.22 && < 1.1

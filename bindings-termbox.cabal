@@ -3,7 +3,7 @@ version:             0.1.0.0
 author:              Nick Partridge
 maintainer:          Nick Partridge <nkpart@gmail.com>
 -- copyright:
-license: TODO
+license: Apache-2.0
 license-file: LICENSE
 category: FFI
 build-type:          Simple

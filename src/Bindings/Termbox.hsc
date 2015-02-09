@@ -138,7 +138,7 @@ module Bindings.Termbox where
 #num TB_INPUT_ESC
 #num TB_INPUT_ALT
 
-#ccall tb_select_input_mode , CInt -> CInt
+#ccall tb_select_input_mode , CInt -> IO CInt
 
 #num TB_OUTPUT_CURRENT
 #num TB_OUTPUT_NORMAL
@@ -146,13 +146,13 @@ module Bindings.Termbox where
 #num TB_OUTPUT_216
 #num TB_OUTPUT_GRAYSCALE
 
-#ccall tb_select_output_mode , CInt -> CInt
+#ccall tb_select_output_mode , CInt -> IO CInt
 
-#ccall tb_peek_event , Ptr <struct tb_cell> -> CInt -> CInt
-#ccall tb_poll_event , Ptr <struct tb_cell> -> CInt
+#ccall tb_peek_event , Ptr <struct tb_event> -> CInt -> IO CInt
+#ccall tb_poll_event , Ptr <struct tb_event> -> IO CInt
 
 #num TB_EOF
 
-#ccall tb_utf8_char_length , CChar -> CInt
-#ccall tb_utf8_char_to_unicode , Ptr CUInt -> CString -> CInt
-#ccall tb_utf8_unicode_to_char , Ptr CChar -> CUInt -> CInt
+#ccall tb_utf8_char_length , CChar -> IO CInt
+#ccall tb_utf8_char_to_unicode , Ptr CUInt -> CString -> IO CInt
+#ccall tb_utf8_unicode_to_char , Ptr CChar -> CUInt -> IO CInt

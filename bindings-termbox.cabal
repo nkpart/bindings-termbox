@@ -25,6 +25,7 @@ library
     src
   default-extensions:
     ForeignFunctionInterface
+    InterruptibleFFI
   extra-libraries:
     termbox
   exposed-modules:
@@ -49,3 +50,4 @@ executable termbox-example
               , containers
               , mtl
               , transformers
+              , async

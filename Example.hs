@@ -5,6 +5,7 @@ import Foreign.C.Types (CUInt)
 import Prelude hiding (length, init)
 import Data.Maybe (fromMaybe)
 import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async (async)
 import Data.Char (ord)
 import Bindings.Termbox
 import Data.Sequence (empty, length, Seq)
@@ -15,7 +16,8 @@ main :: IO ()
 main =
   do c'tb_init
      c'tb_clear
-     execStateT drawLoop empty
+     async $ execStateT drawLoop empty
+     threadDelay 2000000
      c'tb_shutdown
   where drawLoop =
           do ev <- liftIO peekEvent

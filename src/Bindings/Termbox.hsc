@@ -148,8 +148,10 @@ module Bindings.Termbox where
 
 #ccall tb_select_output_mode , CInt -> IO CInt
 
-#ccall tb_peek_event , Ptr <struct tb_event> -> CInt -> IO CInt
-#ccall tb_poll_event , Ptr <struct tb_event> -> IO CInt
+-- These 2 calls block on events, and need to be interruptible.
+
+#callconv tb_peek_event , ccall interruptible , Ptr <struct tb_event> -> CInt -> IO CInt
+#callconv tb_poll_event , ccall interruptible , Ptr <struct tb_event> -> IO CInt
 
 #num TB_EOF
 

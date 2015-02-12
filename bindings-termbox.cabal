@@ -50,4 +50,3 @@ executable termbox-example
               , containers
               , mtl
               , transformers
-              , async

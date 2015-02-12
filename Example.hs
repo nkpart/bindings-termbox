@@ -5,7 +5,6 @@ import Foreign.C.Types (CUInt)
 import Prelude hiding (length, init)
 import Data.Maybe (fromMaybe)
 import Control.Concurrent (threadDelay)
-import Control.Concurrent.Async (async)
 import Data.Char (ord)
 import Bindings.Termbox
 import Data.Sequence (empty, length, Seq)
@@ -16,22 +15,22 @@ main :: IO ()
 main =
   do c'tb_init
      c'tb_clear
-     async $ execStateT drawLoop empty
-     threadDelay 2000000
+     drawSomething (-2::Int) (fromIntegral . ord $ '>')
+     execStateT drawLoop empty
      c'tb_shutdown
   where drawLoop =
-          do ev <- liftIO peekEvent
+          do next <- get
+             liftIO $ do itraverse (\i c -> drawSomething i . fromIntegral . toInteger $ c) next
+                         c'tb_set_cursor (4 + fromIntegral (length next) ) 4
+                         c'tb_present
+             ev <- liftIO peekEvent
              let key = c'tb_event'key ev
                  ch = c'tb_event'ch ev
              when ( key /= c'TB_KEY_CTRL_C ) $ do
-                modify $ if isBackspace key
-                            then initOrEmpty
-                            else (|> ch)
-                next <- get
-                liftIO $ do itraverse (\i c -> drawSomething i . fromIntegral . toInteger $ c) next
-                            c'tb_set_cursor (4 + fromIntegral (length next) ) 4
-                            c'tb_present
-                drawLoop
+                 modify $ if isBackspace key
+                             then initOrEmpty
+                             else (|> ch)
+                 drawLoop
 
 initOrEmpty :: Seq a -> Seq a
 initOrEmpty = fromMaybe empty . preview _init
